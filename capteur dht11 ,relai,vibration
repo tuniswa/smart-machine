@@ -1,0 +1,69 @@
+#include <DHT.h>
+#include <SD.h>
+
+int led =3;
+int vs =D2;
+int ldr=D0;//Set A0(Analog Input) for LDR.
+int value=0;
+#define DHTTYPE DHT11
+#define DHTPIN D6
+DHT dht(DHTPIN, DHTTYPE);
+
+
+void setup(){
+pinMode (led, OUTPUT);
+pinMode (vs, INPUT);
+pinMode(3,OUTPUT);
+ 
+}
+void loop(){
+  float h = dht.readHumidity();      
+  float t = dht.readTemperature();  
+  Serial.println ("Temperature");
+  Serial.print(t);
+  Serial.print("\n");
+  Serial.println ("Humidité");
+  Serial.print(h);
+  Serial.print("\n");  
+  delay(1000);
+ else{
+    //Failed?, get the error reason from fbdo
+
+    Serial.print("Error in setInt, ");
+    Serial.println(fbd.errorReason());
+  }
+
+value=analogRead(ldr);//Reads the Value of LDR(light).
+Serial.println("LDR value is :");//Prints the value of LDR to Serial Monitor.
+Serial.println(value);
+if(value<300)
+  {
+    digitalWrite(3,HIGH);//Makes the LED glow in Dark.
+  }
+  else
+  {
+    digitalWrite(3,LOW);//Turns the LED OFF in Light.
+  }
+
+
+
+
+ 
+
+long measurement = vibration();
+  delay(50);
+  Serial.println(measurement);
+  if (measurement >50){
+    digitalWrite(led , HIGH);
+   
+
+  
+  }
+  else{
+    digitalWrite(led , LOW);
+  }
+  }
+  long vibration(){
+    long measurement=pulseIn (vs, HIGH);
+    return measurement;
+    }
